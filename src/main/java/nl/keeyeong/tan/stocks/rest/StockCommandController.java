@@ -1,7 +1,8 @@
 package nl.keeyeong.tan.stocks.rest;
 
+import javax.validation.ValidationException;
+
 import nl.keeyeong.tan.stocks.model.entity.Stock;
-import nl.keeyeong.tan.stocks.repository.StockRepository;
 import nl.keeyeong.tan.stocks.service.StockService;
 
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,10 @@ public class StockCommandController {
 
 	@PutMapping(path = "/{id}")
 	public ResponseEntity<Stock> update(@PathVariable final Long id, @RequestBody final Stock stock) {
-		return ResponseEntity.ok(service.update(id, stock));
+		if (!id.equals(stock.getId())) {
+			throw new ValidationException("Invalid identifier");
+		}
+		return ResponseEntity.ok(service.update(stock));
 	}
 
 	@DeleteMapping(path = "/{id}")

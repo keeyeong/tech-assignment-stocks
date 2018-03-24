@@ -2,9 +2,9 @@ package nl.keeyeong.tan.stocks.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.ValidationException;
 
 import nl.keeyeong.tan.stocks.model.entity.Stock;
 import nl.keeyeong.tan.stocks.repository.StockRepository;
@@ -23,13 +23,23 @@ public class StockService {
 	private final StockRepository stockRepository;
 
 	public Stock create(final Stock input) {
+		if (input.getId() != null) {
+			throw new ValidationException("Identifier should be null for creation");
+		}
 		input.setLastUpdate(LocalDateTime.now());
 		return stockRepository.save(input);
 	}
 
-	public Stock update(final Long id, final Stock input) {
-		input.setLastUpdate(LocalDateTime.now());
-		return stockRepository.save(input);
+	public Stock update(final Stock input) {
+		if (input.getId() == null) {
+			throw new ValidationException("Identifier should not be null for update");
+		}
+		if (stockRepository.findById(input.getId()).isPresent()) {
+			input.setLastUpdate(LocalDateTime.now());
+			return stockRepository.save(input);
+		} else {
+			throw new EntityNotFoundException();
+		}
 	}
 
 	public List<Stock> read() {

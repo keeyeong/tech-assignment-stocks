@@ -11,6 +11,7 @@ buildscript {
 plugins {
     id 'org.springframework.boot' version '1.5.9.RELEASE'
     id "io.spring.dependency-management" version "1.0.3.RELEASE"
+    id 'nebula.facet' version '3.4.0'
 }
 
 apply plugin: 'idea'
@@ -27,9 +28,18 @@ targetCompatibility = JavaVersion.VERSION_1_8
 repositories {
     mavenCentral()
 }
+
 dependencyManagement {
     imports {
         mavenBom 'org.springframework.boot:spring-boot-starter-parent:2.0.0.RELEASE'
+    }
+}
+
+facets {
+    integrationTest {
+        parentSourceSet = 'main'
+        testTaskName = 'integrationTest'
+        includeInCheckLifecycle = false
     }
 }
 
@@ -39,9 +49,9 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'org.liquibase:liquibase-core'
-//    compile 'org.hibernate:hibernate-java8'
-//    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
-//    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
-//    compile 'com.thoughtworks.xstream:xstream:1.4.10'  // java datatype 8 support
     compile 'com.h2database:h2'
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+
+    integrationTestCompile 'org.springframework.boot:spring-boot-starter-test'
 }

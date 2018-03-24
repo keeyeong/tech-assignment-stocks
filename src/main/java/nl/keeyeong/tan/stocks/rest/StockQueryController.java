@@ -2,10 +2,7 @@ package nl.keeyeong.tan.stocks.rest;
 
 import java.util.List;
 
-import javax.persistence.EntityNotFoundException;
-
 import nl.keeyeong.tan.stocks.model.entity.Stock;
-import nl.keeyeong.tan.stocks.repository.StockRepository;
 import nl.keeyeong.tan.stocks.service.StockService;
 
 import org.springframework.web.bind.annotation.GetMapping;
