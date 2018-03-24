@@ -1,1 +1,1 @@
-# tech-assignment-stocks
+# Stocks
