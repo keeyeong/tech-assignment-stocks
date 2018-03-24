@@ -6,10 +6,10 @@ import javax.persistence.EntityNotFoundException;
 
 import nl.keeyeong.tan.stocks.model.entity.Stock;
 import nl.keeyeong.tan.stocks.repository.StockRepository;
+import nl.keeyeong.tan.stocks.service.StockService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,16 +23,15 @@ import lombok.AllArgsConstructor;
 @RequestMapping("api/stocks")
 public class StockQueryController {
 
-	private final StockRepository stockRepository;
+	private final StockService service;
 
 	@GetMapping
 	public List<Stock> read() {
-		return stockRepository.findAll();
+		return service.read();
 	}
 
 	@GetMapping("/{id}")
 	public Stock read(@PathVariable final Long id) {
-		return stockRepository.findById(id)
-			.orElseThrow(EntityNotFoundException::new);
+		return service.read(id);
 	}
 }

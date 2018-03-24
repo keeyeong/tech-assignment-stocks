@@ -2,6 +2,7 @@ package nl.keeyeong.tan.stocks.rest;
 
 import nl.keeyeong.tan.stocks.model.entity.Stock;
 import nl.keeyeong.tan.stocks.repository.StockRepository;
+import nl.keeyeong.tan.stocks.service.StockService;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,23 +23,21 @@ import lombok.AllArgsConstructor;
 @RequestMapping("api/stocks")
 public class StockCommandController {
 
-	private final StockRepository stockRepository;
+	private final StockService service;
 
 	@PostMapping
-	public ResponseEntity create(@RequestBody final Stock stock) {
-		final Stock result = stockRepository.save(stock);
-		return ResponseEntity.ok(result.getId());
+	public ResponseEntity<Stock> create(@RequestBody final Stock stock) {
+		return ResponseEntity.ok(service.create(stock));
 	}
 
 	@PutMapping(path = "/{id}")
-	public ResponseEntity update(@PathVariable final Long id, @RequestBody final Stock stock) {
-		final Stock result = stockRepository.save(stock);
-		return ResponseEntity.ok(result.getId());
+	public ResponseEntity<Stock> update(@PathVariable final Long id, @RequestBody final Stock stock) {
+		return ResponseEntity.ok(service.update(id, stock));
 	}
 
 	@DeleteMapping(path = "/{id}")
-	public ResponseEntity delete(@PathVariable("id") Long id) {
-		stockRepository.deleteById(id);
-		return ResponseEntity.ok(id);
+	public ResponseEntity delete(@PathVariable("id") final Long id) {
+		service.delete(id);
+		return ResponseEntity.ok().build();
 	}
 }
