@@ -1,0 +1,21 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd"
+                   logicalFilePath="db/changelog/001-ddl-contract.xml">
+    <changeSet id="1" author="keeyeong.tan">
+        <comment>Creating the contract table</comment>
+        <createTable tableName="stock">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKeyName="stock_pk" primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="current_price" type="decimal (25, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_update" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

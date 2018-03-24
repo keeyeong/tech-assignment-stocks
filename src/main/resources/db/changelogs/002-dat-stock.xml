@@ -1,0 +1,12 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd"
+                   logicalFilePath="db/changelog/002-dat-contract.xml">
+    <changeSet id="1" author="keeyeong.tan">
+        <comment>Inserting data into the contract table</comment>
+        <insert tableName="stock">
+            <column name="name" value="ZOOM"/>
+            <column name="current_price" value="0"/>
+            <column name="last_update" value="1970-01-01T00:00:00"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

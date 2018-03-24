@@ -1,0 +1,40 @@
+info:
+  name: stocks
+  description: Stocks Service
+
+server:
+  port: ${PORT:8484}
+
+spring:
+  application:
+    name: stocks
+  jpa:
+    show-sql: false
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate.dialect: org.hibernate.dialect.H2Dialect
+      org.hibernate.envers.store_data_at_delete: true
+      org.hibernate.envers.global_with_modified_flag: true
+      org.hibernate.envers.track_entities_changed_in_revision: true
+      org.hibernate.flushMode: ALWAYS
+  datasource:
+    url: jdbc:h2:mem:testDB;MODE=MSSQLServer;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    hikari:
+      driverClassName: org.h2.Driver
+  jackson:
+    serialization:
+      write-dates-with-zone-id: false
+    deserialization:
+      use-long-for-ints: true
+      accept-float-as-int: false
+    date-format: com.fasterxml.jackson.databind.util.StdDateFormat
+  liquibase:
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    url: ${spring.datasource.url}
+    enabled: true
+    change-log: classpath:/db/changelog-master.xml
