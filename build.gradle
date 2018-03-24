@@ -1,0 +1,47 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.9.RELEASE'
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE"
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '1.5.9.RELEASE'
+    id "io.spring.dependency-management" version "1.0.3.RELEASE"
+}
+
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: "io.spring.dependency-management"
+
+group 'nl.keeyeong.tan.stocks'
+version '0.0.1-SNAPSHOT'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+repositories {
+    mavenCentral()
+}
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.boot:spring-boot-starter-parent:2.0.0.RELEASE'
+    }
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'org.liquibase:liquibase-core'
+//    compile 'org.hibernate:hibernate-java8'
+//    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
+//    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+//    compile 'com.thoughtworks.xstream:xstream:1.4.10'  // java datatype 8 support
+    compile 'com.h2database:h2'
+}
