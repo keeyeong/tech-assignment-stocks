@@ -46,7 +46,7 @@ The gradle task to execute the tests is `integrationTest`:
 
 `./gradlew integrationTest`
 
-Integration test has its own `application.yml` for the intention that it will also execute with test data and will always be using an in memory db, regardless of what was changed for the dev and prod profile.
+Integration test has its own `application-it.yml` for the intention that it will also execute with test data and will always be using an in memory db, regardless of what was changed for the dev and prod profile.
 
 ## Building and unit tests
 
