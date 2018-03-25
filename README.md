@@ -1,6 +1,6 @@
 # Tech Assignment Stocks
 
-This is a Spring Boot project with Gradle as the build tool. To start the service in the 'dev' profile (meant to indicate dev environment), use the bootRun task:
+This is a Spring Boot application with Gradle as the build tool. To start the service in the 'dev' profile (meant to indicate dev environment), use the bootRun task:
 
 `./gradlew bootRun -Dspring.profiles.active=dev`
 
@@ -8,15 +8,15 @@ Otherwise production like environment can be started with:
 
 `./gradlew bootRun`
 
-##The 'default' or 'prod' profile
+## The 'default' or 'prod' profile
 
 This is the default profile when running the application without specifying active spring profile. In this mode test data WILL NOT be created in the memory DB.
 
 This mode is meant to run with the 'prod' environment of the front end. It listens to port 8080.
 
-##The 'dev' profile
+## The 'dev' profile
 
-In this spring profile some test data will be inserted. This is achieved by the "context" attribute on the liquibase script responsible for inserting test data:
+In this Spring profile some test data will be inserted. This is achieved by the "context" attribute on the liquibase script responsible for inserting test data:
 
 `<changeSet id="1" author="keeyeong.tan" context="dev">`
 
