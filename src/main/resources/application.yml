@@ -37,4 +37,5 @@ spring:
     password: ${spring.datasource.password}
     url: ${spring.datasource.url}
     enabled: true
+    contexts: prod
     change-log: classpath:/db/changelog-master.xml

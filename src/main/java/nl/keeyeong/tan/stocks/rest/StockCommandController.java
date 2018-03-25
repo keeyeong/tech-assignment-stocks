@@ -2,8 +2,9 @@ package nl.keeyeong.tan.stocks.rest;
 
 import javax.validation.ValidationException;
 
-import nl.keeyeong.tan.stocks.model.entity.Stock;
+import nl.keeyeong.tan.stocks.model.dto.StockDto;
 import nl.keeyeong.tan.stocks.service.StockService;
+import nl.keeyeong.tan.stocks.transformer.StockDtoTransformer;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,18 +26,19 @@ import lombok.AllArgsConstructor;
 public class StockCommandController {
 
 	private final StockService service;
+	private final StockDtoTransformer transformer;
 
 	@PostMapping
-	public ResponseEntity<Stock> create(@RequestBody final Stock stock) {
-		return ResponseEntity.ok(service.create(stock));
+	public ResponseEntity<StockDto> create(@RequestBody final StockDto stock) {
+		return ResponseEntity.ok(transformer.entityToDto(service.create(transformer.dtoToEntity(stock))));
 	}
 
 	@PutMapping(path = "/{id}")
-	public ResponseEntity<Stock> update(@PathVariable final Long id, @RequestBody final Stock stock) {
+	public ResponseEntity<StockDto> update(@PathVariable final Long id, @RequestBody final StockDto stock) {
 		if (!id.equals(stock.getId())) {
 			throw new ValidationException("Invalid identifier");
 		}
-		return ResponseEntity.ok(service.update(stock));
+		return ResponseEntity.ok(transformer.entityToDto(service.update(transformer.dtoToEntity(stock))));
 	}
 
 	@DeleteMapping(path = "/{id}")

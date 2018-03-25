@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Optional;
 
-import nl.keeyeong.tan.stocks.model.entity.Stock;
+import nl.keeyeong.tan.stocks.model.dto.StockDto;
 
 import org.assertj.core.data.Percentage;
 import org.junit.Before;
@@ -42,26 +42,26 @@ public class IntegrationTest {
 	public void stocksRestCrudTest() {
 
 		// Check number of rows before we start
-		Stock[] results = restTemplate.getForObject(getStockURL(), Stock[].class);
+		StockDto[] results = restTemplate.getForObject(getStockURL(), StockDto[].class);
 
 		final int initialSize = results.length;
 
 		// Create new row
-		final Stock newStock = restTemplate.postForObject(getStockURL(),
-			Stock.builder()
+		final StockDto newStock = restTemplate.postForObject(getStockURL(),
+			StockDto.builder()
 				.name("MAS")
 				.currentPrice(BigDecimal.ONE)
 				.build(),
-			Stock.class);
+			StockDto.class);
 
 		assertThat(newStock.getName()).isEqualTo("MAS");
 		assertThat(newStock.getCurrentPrice()).isCloseTo(BigDecimal.ONE, Percentage.withPercentage(0d)); // force numeric comparison
 
-		results = restTemplate.getForObject(getStockURL(), Stock[].class);
+		results = restTemplate.getForObject(getStockURL(), StockDto[].class);
 		assertThat(results.length).isEqualTo(initialSize + 1); // one more row than before returned
 
 		// Check the new row
-		Stock result = restTemplate.getForObject(getStockURL(newStock.getId()), Stock.class);
+		StockDto result = restTemplate.getForObject(getStockURL(newStock.getId()), StockDto.class);
 		assertThat(result.getName()).isEqualTo("MAS");
 		assertThat(result.getCurrentPrice()).isCloseTo(BigDecimal.ONE, Percentage.withPercentage(0d));
 
@@ -69,17 +69,17 @@ public class IntegrationTest {
 
 		// Update the new row
 		restTemplate.put(getStockURL(newStock.getId()),
-			Stock.builder()
+			StockDto.builder()
 				.id(newStock.getId())
 				.name("SIA")
 				.currentPrice(BigDecimal.TEN)
 				.build());
 
-		results = restTemplate.getForObject(getStockURL(), Stock[].class);
+		results = restTemplate.getForObject(getStockURL(), StockDto[].class);
 		assertThat(results.length).isEqualTo(initialSize + 1); // number of rows remains the same
 
 		// Check the updated row
-		result = restTemplate.getForObject(getStockURL(newStock.getId()), Stock.class);
+		result = restTemplate.getForObject(getStockURL(newStock.getId()), StockDto.class);
 		assertThat(result.getName()).isEqualTo("SIA");
 		assertThat(result.getCurrentPrice()).isCloseTo(BigDecimal.TEN, Percentage.withPercentage(0d));
 		assertThat(result.getLastUpdate()).isAfter(insertionTimestamp);
@@ -87,10 +87,10 @@ public class IntegrationTest {
 		// Delete the row
 		restTemplate.delete(getStockURL(newStock.getId()));
 
-		results = restTemplate.getForObject(getStockURL(), Stock[].class);
+		results = restTemplate.getForObject(getStockURL(), StockDto[].class);
 		assertThat(results.length).isEqualTo(initialSize); // number of rows remains as before the creation
 
-		final Optional<Stock> deletedRow = Arrays.stream(results).filter(r->r.getId().equals(newStock.getId())).findAny();
+		final Optional<StockDto> deletedRow = Arrays.stream(results).filter(r->r.getId().equals(newStock.getId())).findAny();
 		assertThat(deletedRow).isEmpty();
 	}
 
