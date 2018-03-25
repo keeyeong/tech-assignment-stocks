@@ -1,0 +1,5 @@
+server:
+  port: ${PORT:8484}
+spring:
+  liquibase:
+    contexts: dev

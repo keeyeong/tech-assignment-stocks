@@ -1,0 +1,66 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE'
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE"
+        classpath 'org.liquibase:liquibase-gradle-plugin:1.2.4'
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.0.0.RELEASE'
+    id "io.spring.dependency-management" version "1.0.3.RELEASE"
+    id 'nebula.facet' version '3.4.0'
+}
+
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: "io.spring.dependency-management"
+
+group 'nl.keeyeong.tan.stocks'
+version '0.0.1-SNAPSHOT'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+repositories {
+    mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.boot:spring-boot-starter-parent:2.0.0.RELEASE'
+    }
+}
+
+facets {
+    integrationTest {
+        parentSourceSet = 'main'
+        testTaskName = 'integrationTest'
+        includeInCheckLifecycle = false
+    }
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'org.liquibase:liquibase-core'
+    compile 'com.h2database:h2'
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+
+    integrationTestCompile 'org.springframework.boot:spring-boot-starter-test'
+}
+
+bootRun {
+    systemProperties System.properties
+
+    if (project.hasProperty('jvmArgs')) {
+        jvmArgs = (project.jvmArgs.split('\\s+') as java.util.List)
+    }
+}
