@@ -12,7 +12,7 @@ Otherwise production like environment can be started with:
 
 This is the default profile when running the application without specifying active spring profile. In this mode test data WILL NOT be created in the memory DB.
 
-This mode is meant to run with the 'prod' environment of the front end.
+This mode is meant to run with the 'prod' environment of the front end. It listens to port 8080.
 
 ##The 'dev' profile
 
@@ -20,7 +20,7 @@ In this spring profile some test data will be inserted. This is achieved by the 
 
 `<changeSet id="1" author="keeyeong.tan" context="dev">`
 
-This mode is meant to run with the 'dev' (default) environment of the front end.
+This mode is meant to run with the 'dev' (default) environment of the front end. It listens to port 8484.
 
 ## Datasource and persisting data
 
