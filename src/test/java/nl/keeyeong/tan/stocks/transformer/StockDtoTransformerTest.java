@@ -51,5 +51,6 @@ public class StockDtoTransformerTest {
 		assertThat(result.getId()).isEqualTo(100L);
 		assertThat(result.getName()).isEqualTo("ABC");
 		assertThat(result.getCurrentPrice()).isEqualTo(BigDecimal.TEN);
+		assertThat(result.getLastUpdate()).isEqualTo(thisMomentInTime);
 	}
 }
