@@ -88,7 +88,7 @@ public class StockServiceTest {
 
 		final Stock targetRow = stockCaptor.getValue();
 		assertThat(targetRow.getLastUpdate()).isAfter(LocalDateTime.MIN);
-		assertThat(targetRow.getName()).isEqualTo("DEF");
+		assertThat(targetRow.getName()).isEqualTo("ABC"); // Only price should be updated
 		assertThat(targetRow.getCurrentPrice()).isEqualTo(BigDecimal.ZERO);
 	}
 

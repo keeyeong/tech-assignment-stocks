@@ -80,7 +80,7 @@ public class IntegrationTest {
 
 		// Check the updated row
 		result = restTemplate.getForObject(getStockURL(newStock.getId()), StockDto.class);
-		assertThat(result.getName()).isEqualTo("SIA");
+		assertThat(result.getName()).isEqualTo("MAS"); // Only price should be updated
 		assertThat(result.getCurrentPrice()).isCloseTo(BigDecimal.TEN, Percentage.withPercentage(0d));
 		assertThat(result.getLastUpdate()).isAfter(insertionTimestamp);
 
