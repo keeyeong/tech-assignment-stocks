@@ -1,13 +1,4 @@
-info:
-  name: stocks
-  description: Stocks Service
-
-server:
-  port: ${PORT:8080}
-
 spring:
-  application:
-    name: stocks
   jpa:
     show-sql: false
     generate-ddl: false
@@ -25,17 +16,5 @@ spring:
     password:
     hikari:
       driverClassName: org.h2.Driver
-  jackson:
-    serialization:
-      write-dates-with-zone-id: false
-    deserialization:
-      use-long-for-ints: true
-      accept-float-as-int: false
-    date-format: com.fasterxml.jackson.databind.util.StdDateFormat
   liquibase:
-    user: ${spring.datasource.username}
-    password: ${spring.datasource.password}
-    url: ${spring.datasource.url}
-    enabled: true
-    contexts: prod
-    change-log: classpath:/db/changelog-master.xml
+    contexts: dev
